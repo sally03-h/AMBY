@@ -1,0 +1,722 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>AMBY Competitor Flows</title>
+<meta name="description" content="How Tandem, K Health, OpenEvidence and Epic AI actually work: real product screens, step-by-step user flows, and what each means for AMBY.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Source+Serif+4:opsz,wght@8..60,500;8..60,600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#f7f6f3; --surface:#ffffff; --surface-2:#f0eee9; --ink:#1b1b1a; --ink-2:#55534e; --ink-3:#8a877f;
+  --line:#e3e0d8; --accent:#2f5bd3; --accent-soft:#e7edfb; --amby:#0f7a5c; --amby-soft:#e2f3ec;
+  --warn:#b4541a; --warn-soft:#fbeee4;
+  --tandem:#8bb82b; --khealth:#2b7bd8; --oe:#e8622c; --epic:#c3245a;
+  --shadow:0 1px 2px rgba(0,0,0,.04),0 4px 16px rgba(0,0,0,.05);
+  --radius:14px;
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    --bg:#141413; --surface:#1d1d1b; --surface-2:#262624; --ink:#efede8; --ink-2:#b7b4ac; --ink-3:#85827a;
+    --line:#33322f; --accent:#7f9df0; --accent-soft:#1f2a45; --amby:#4cc49c; --amby-soft:#16302a;
+    --warn:#f0a06a; --warn-soft:#3a2618; --shadow:0 1px 2px rgba(0,0,0,.3);
+  }
+}
+:root[data-theme="dark"]{
+  --bg:#141413; --surface:#1d1d1b; --surface-2:#262624; --ink:#efede8; --ink-2:#b7b4ac; --ink-3:#85827a;
+  --line:#33322f; --accent:#7f9df0; --accent-soft:#1f2a45; --amby:#4cc49c; --amby-soft:#16302a;
+  --warn:#f0a06a; --warn-soft:#3a2618; --shadow:0 1px 2px rgba(0,0,0,.3);
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth;scroll-padding-top:64px}
+body{margin:0;background:var(--bg);color:var(--ink);font:15px/1.6 Inter,system-ui,sans-serif;-webkit-font-smoothing:antialiased}
+img,video{max-width:100%;display:block}
+a{color:var(--accent)}
+h1,h2,h3{font-family:"Source Serif 4",Georgia,serif;font-weight:600;letter-spacing:-.01em;line-height:1.2;margin:0}
+h1{font-size:clamp(30px,5vw,48px)}
+h2{font-size:clamp(24px,3.4vw,34px)}
+h3{font-size:19px}
+.wrap{max-width:1180px;margin:0 auto;padding:0 24px}
+@media (max-width:600px){.wrap{padding:0 16px}}
+.muted{color:var(--ink-2)}
+.small{font-size:13px}
+.eyebrow{font:600 12px/1 Inter,sans-serif;letter-spacing:.08em;text-transform:uppercase;color:var(--ink-3)}
+
+/* nav */
+nav.top{position:sticky;top:0;z-index:20;background:color-mix(in srgb,var(--bg) 88%,transparent);backdrop-filter:blur(10px);border-bottom:1px solid var(--line)}
+nav.top .wrap{display:flex;align-items:center;gap:6px;height:56px;overflow-x:auto;scrollbar-width:none}
+nav.top .wrap::-webkit-scrollbar{display:none}
+nav.top .brand{font-weight:700;margin-right:12px;white-space:nowrap}
+nav.top a{color:var(--ink-2);text-decoration:none;font-size:14px;font-weight:500;padding:6px 10px;border-radius:8px;white-space:nowrap;display:flex;align-items:center;gap:7px}
+nav.top a:hover,nav.top a.on{background:var(--surface-2);color:var(--ink)}
+.dot{width:9px;height:9px;border-radius:50%;display:inline-block;flex:none}
+#themeBtn{margin-left:auto;white-space:nowrap;flex:none;background:none;border:1px solid var(--line);color:var(--ink-2);border-radius:8px;padding:5px 9px;cursor:pointer;font:inherit;font-size:13px}
+
+/* hero */
+header.hero{padding:64px 0 32px}
+header.hero p.lede{font-size:18px;max-width:760px;color:var(--ink-2);margin:16px 0 0}
+.meta{display:flex;flex-wrap:wrap;gap:8px 20px;margin-top:20px;font-size:13px;color:var(--ink-3)}
+
+/* cards */
+.grid4{display:grid;grid-template-columns:repeat(4,1fr);gap:14px}
+@media (max-width:980px){.grid4{grid-template-columns:repeat(2,1fr)}}
+@media (max-width:560px){.grid4{grid-template-columns:1fr}}
+.card{background:var(--surface);border:1px solid var(--line);border-radius:var(--radius);padding:18px;box-shadow:var(--shadow)}
+.co-card{display:flex;flex-direction:column;gap:10px;text-decoration:none;color:inherit;border-top:4px solid var(--c)}
+.co-card:hover{transform:translateY(-2px);transition:transform .15s}
+.co-card h3{display:flex;align-items:center;gap:8px}
+.co-card dl{margin:0;display:grid;grid-template-columns:auto 1fr;gap:4px 10px;font-size:13px}
+.co-card dt{color:var(--ink-3)}
+.co-card dd{margin:0}
+.tag{display:inline-block;font-size:12px;font-weight:600;padding:3px 9px;border-radius:999px;background:var(--surface-2);color:var(--ink-2)}
+.tag.threat{background:var(--warn-soft);color:var(--warn)}
+.tag.amby{background:var(--amby-soft);color:var(--amby)}
+
+section{padding:56px 0;border-top:1px solid var(--line)}
+.sec-head{display:flex;flex-wrap:wrap;align-items:flex-end;justify-content:space-between;gap:12px;margin-bottom:24px}
+.sec-head p{margin:8px 0 0;max-width:720px}
+
+/* journey map */
+.journey{overflow-x:auto;border:1px solid var(--line);border-radius:var(--radius);background:var(--surface)}
+.journey table{border-collapse:collapse;width:100%;min-width:860px;font-size:13px}
+.journey th,.journey td{padding:12px;border-bottom:1px solid var(--line);vertical-align:top;text-align:left}
+.journey thead th{background:var(--surface-2);font-weight:600;font-size:12px;letter-spacing:.04em;text-transform:uppercase;color:var(--ink-2)}
+.journey tbody th{width:150px;font-weight:600;white-space:nowrap}
+.journey tr:last-child td,.journey tr:last-child th{border-bottom:none}
+.chip{display:inline-block;margin:0 4px 6px 0;padding:4px 9px;border-radius:7px;background:color-mix(in srgb,var(--c) 14%,transparent);border:1px solid color-mix(in srgb,var(--c) 35%,transparent);font-weight:500;line-height:1.35}
+.chip.ghost{background:none;border-style:dashed;color:var(--ink-3)}
+tr.amby-row th,tr.amby-row td{background:var(--amby-soft)}
+tr.amby-row .chip{--c:var(--amby);font-weight:600}
+.legend{display:flex;flex-wrap:wrap;gap:14px;margin-top:10px;font-size:12px;color:var(--ink-3)}
+
+/* company section */
+.co-head{display:grid;grid-template-columns:1.3fr 1fr;gap:28px;align-items:start}
+@media (max-width:860px){.co-head{grid-template-columns:1fr}}
+.co-title{display:flex;align-items:center;gap:12px;margin-bottom:10px}
+.co-title .dot{width:14px;height:14px}
+.facts{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-top:18px}
+@media (max-width:560px){.facts{grid-template-columns:1fr 1fr}}
+.fact{background:var(--surface);border:1px solid var(--line);border-radius:10px;padding:10px 12px}
+.fact b{display:block;font-size:18px;font-family:"Source Serif 4",serif}
+.fact span{font-size:12px;color:var(--ink-3)}
+.timeline{list-style:none;margin:0;padding:0;border-left:2px solid var(--line)}
+.timeline li{position:relative;padding:0 0 12px 16px;font-size:13.5px}
+.timeline li::before{content:"";position:absolute;left:-6px;top:6px;width:10px;height:10px;border-radius:50%;background:var(--surface);border:2px solid var(--c)}
+.timeline time{display:block;font-size:12px;color:var(--ink-3);font-weight:600}
+
+h3.flow-title{margin:36px 0 6px;display:flex;align-items:baseline;gap:10px;flex-wrap:wrap}
+.flow{display:grid;grid-auto-flow:column;grid-auto-columns:minmax(260px,300px);gap:16px;overflow-x:auto;padding:14px 2px 18px;scroll-snap-type:x mandatory}
+.flow::-webkit-scrollbar{height:8px}
+.flow::-webkit-scrollbar-thumb{background:var(--line);border-radius:8px}
+.step{scroll-snap-align:start;background:var(--surface);border:1px solid var(--line);border-radius:var(--radius);overflow:hidden;display:flex;flex-direction:column;box-shadow:var(--shadow)}
+.step .shot{position:relative;background:var(--surface-2);aspect-ratio:1/1;overflow:hidden;cursor:zoom-in}
+.step .shot.tall{aspect-ratio:9/14}
+.step .shot.wide{aspect-ratio:16/11}
+.step .shot img,.step .shot video{width:100%;height:100%;object-fit:cover}
+.step .shot.contain img{object-fit:contain}
+.step .shot.top img{object-position:top}
+.step .body{padding:14px 16px 16px;display:flex;flex-direction:column;gap:6px;flex:1}
+.num{display:inline-flex;align-items:center;justify-content:center;width:24px;height:24px;border-radius:50%;background:var(--c);color:#fff;font-size:12px;font-weight:700;flex:none}
+.step h4{margin:0;font-size:15px;display:flex;gap:9px;align-items:center}
+.step p{margin:0;font-size:13.5px;color:var(--ink-2)}
+.step .who{font-size:11.5px;font-weight:600;letter-spacing:.04em;text-transform:uppercase;color:var(--ink-3)}
+.step.textonly .shot{display:flex;align-items:center;justify-content:center;cursor:default;padding:22px;background:color-mix(in srgb,var(--c) 8%,var(--surface-2))}
+.step.textonly .shot .inner{font-size:13px;color:var(--ink-2);text-align:center}
+.step.textonly .shot .inner b{display:block;font-family:"Source Serif 4",serif;font-size:28px;color:var(--ink);margin-bottom:6px}
+.badge-src{position:absolute;left:8px;bottom:8px;font-size:10.5px;background:rgba(0,0,0,.6);color:#fff;padding:2px 7px;border-radius:5px}
+.no-shot{font-size:11px;color:var(--ink-3);font-style:italic}
+
+/* crop helper for one large composite image */
+.crop{position:relative;overflow:hidden;cursor:zoom-in;background:var(--surface-2)}
+.crop img{position:absolute;max-width:none;width:calc(100% / var(--w));left:calc(-100% * var(--x) / var(--w));top:calc(-100% * var(--y) / var(--h))}
+
+.two{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-top:22px}
+@media (max-width:860px){.two{grid-template-columns:1fr}}
+.panel{background:var(--surface);border:1px solid var(--line);border-radius:var(--radius);padding:18px 20px}
+.panel h4{margin:0 0 8px;font-size:14px}
+.panel ul{margin:0;padding-left:18px;font-size:14px}
+.panel li{margin-bottom:6px}
+.panel.amby{background:var(--amby-soft);border-color:color-mix(in srgb,var(--amby) 35%,transparent)}
+.panel.amby h4{color:var(--amby)}
+
+.feature{margin-top:18px;display:grid;grid-template-columns:1.4fr 1fr;gap:20px;align-items:center}
+@media (max-width:860px){.feature{grid-template-columns:1fr}}
+.feature figure{margin:0;border:1px solid var(--line);border-radius:var(--radius);overflow:hidden;background:var(--surface);cursor:zoom-in}
+figcaption{font-size:12.5px;color:var(--ink-3);padding:8px 12px;border-top:1px solid var(--line);background:var(--surface)}
+
+.chat{background:var(--surface);border:1px solid var(--line);border-radius:var(--radius);padding:12px;display:flex;flex-direction:column;gap:6px;font-size:12px;line-height:1.4}
+.chat .b{max-width:88%;padding:6px 10px;border-radius:12px}
+.chat .pt{align-self:flex-end;background:var(--accent-soft)}
+.chat .ai{align-self:flex-start;background:var(--surface-2)}
+.chat .slots{display:flex;gap:6px;flex-wrap:wrap}
+.chat .slot{border:1px solid var(--line);border-radius:8px;padding:4px 8px;font-size:11.5px;background:var(--surface)}
+
+/* compare */
+.cmp{overflow-x:auto;border:1px solid var(--line);border-radius:var(--radius);background:var(--surface)}
+.cmp table{border-collapse:collapse;width:100%;min-width:900px;font-size:13.5px}
+.cmp th,.cmp td{padding:11px 13px;border-bottom:1px solid var(--line);text-align:left;vertical-align:top}
+.cmp thead th{background:var(--surface-2);font-size:13px}
+.cmp tbody th{font-weight:600;color:var(--ink-2);width:170px}
+.cmp td.amby{background:var(--amby-soft)}
+.cmp tr:last-child th,.cmp tr:last-child td{border-bottom:none}
+
+.patterns{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}
+@media (max-width:900px){.patterns{grid-template-columns:1fr 1fr}}
+@media (max-width:560px){.patterns{grid-template-columns:1fr}}
+.pattern h4{margin:6px 0 6px;font-size:15px}
+.pattern p{margin:0;font-size:13.5px;color:var(--ink-2)}
+.pattern .from{font-size:12px;margin-top:10px;color:var(--ink-3)}
+
+footer{padding:40px 0 64px;border-top:1px solid var(--line);font-size:13px;color:var(--ink-2)}
+footer h3{font-size:16px;margin-bottom:10px}
+footer ul{padding-left:18px;margin:0 0 18px}
+footer li{margin-bottom:4px}
+
+/* lightbox */
+#lb{position:fixed;inset:0;background:rgba(10,10,10,.88);display:none;z-index:50;align-items:center;justify-content:center;flex-direction:column;padding:24px;cursor:zoom-out}
+#lb.open{display:flex}
+#lb img{max-height:84vh;max-width:94vw;border-radius:8px;background:#fff}
+#lb p{color:#eee;max-width:760px;text-align:center;font-size:14px;margin:14px 0 0}
+</style>
+</head>
+<body>
+
+<nav class="top" aria-label="Sections">
+  <div class="wrap">
+    <span class="brand">AMBY · Competitor flows</span>
+    <a href="#overview">Overview</a>
+    <a href="#tandem"><span class="dot" style="background:var(--tandem)"></span>Tandem</a>
+    <a href="#khealth"><span class="dot" style="background:var(--khealth)"></span>K Health</a>
+    <a href="#openevidence"><span class="dot" style="background:var(--oe)"></span>OpenEvidence</a>
+    <a href="#epic"><span class="dot" style="background:var(--epic)"></span>Epic AI</a>
+    <a href="#compare">Side by side</a>
+    <a href="#patterns">For AMBY</a>
+    <button id="themeBtn" type="button" aria-label="Toggle colour theme">◐ Theme</button>
+  </div>
+</nav>
+
+<header class="hero">
+  <div class="wrap">
+    <div class="eyebrow">Companion to the AMBY competitive strategy deck</div>
+    <h1 style="margin-top:12px">How the four closest competitors actually work</h1>
+    <p class="lede">Step-by-step user flows for Tandem, K Health, OpenEvidence and Epic AI, built from each company's own product screens. Each section covers what they are shipping now, how a clinician or patient moves through the product, and what it means for AMBY.</p>
+    <div class="meta">
+      <span>Prepared for Dr. Riaz · October 2026</span>
+      <span>Screens: companies' own websites, App Store listings and newsroom posts</span>
+      <span>Click any screen to enlarge</span>
+    </div>
+  </div>
+</header>
+
+<!-- ================= OVERVIEW ================= -->
+<section id="overview" style="border-top:none;padding-top:8px">
+  <div class="wrap">
+    <div class="grid4">
+      <a class="card co-card" href="#tandem" style="--c:var(--tandem)">
+        <h3><span class="dot" style="background:var(--tandem)"></span>Tandem Health</h3>
+        <dl><dt>User</dt><dd>Clinician</dd><dt>Job</dt><dd>Document, code and look up guidelines during the visit</dd><dt>Market</dt><dd>Europe (14 countries)</dd></dl>
+        <div><span class="tag threat">Direct competitor (EU)</span></div>
+      </a>
+      <a class="card co-card" href="#khealth" style="--c:var(--khealth)">
+        <h3><span class="dot" style="background:var(--khealth)"></span>K Health</h3>
+        <dl><dt>User</dt><dd>Patient first, then clinician</dd><dt>Job</dt><dd>AI intake and triage that ends in a booked visit</dd><dt>Market</dt><dd>US health systems</dd></dl>
+        <div><span class="tag threat">Closest US competitor</span></div>
+      </a>
+      <a class="card co-card" href="#openevidence" style="--c:var(--oe)">
+        <h3><span class="dot" style="background:var(--oe)"></span>OpenEvidence</h3>
+        <dl><dt>User</dt><dd>Clinician</dd><dt>Job</dt><dd>Cited answers from the literature; now patient-aware</dd><dt>Market</dt><dd>US, free for verified clinicians</dd></dl>
+        <div><span class="tag threat">Watch closely</span></div>
+      </a>
+      <a class="card co-card" href="#epic" style="--c:var(--epic)">
+        <h3><span class="dot" style="background:var(--epic)"></span>Epic AI</h3>
+        <dl><dt>User</dt><dd>Clinician (Art), patient (Emmie), back office (Penny)</dd><dt>Job</dt><dd>AI built into the EHR, reading the full record</dd><dt>Market</dt><dd>Epic's installed base</dd></dl>
+        <div><span class="tag amby">Platform: be additive</span></div>
+      </a>
+    </div>
+
+    <div class="sec-head" style="margin-top:44px">
+      <div>
+        <div class="eyebrow">Journey map</div>
+        <h2 style="margin-top:6px">Where each product sits in a patient visit</h2>
+        <p class="muted">Everyone is converging on the visit itself, but on documentation and lookup. No one turns labs, imaging, genomics and history into a ranked differential and the next test to order. That is the row AMBY fills.</p>
+      </div>
+    </div>
+    <div class="journey">
+      <table>
+        <thead><tr><th></th><th>Before the visit</th><th>In the room: capture</th><th>In the room: reasoning</th><th>After the visit</th><th>Between visits</th></tr></thead>
+        <tbody>
+          <tr style="--c:var(--tandem)"><th><span class="dot" style="background:var(--tandem)"></span> Tandem</th>
+            <td><span class="chip ghost">"Pre-visit prep" (announced)</span></td>
+            <td><span class="chip">Ambient scribe</span><span class="chip">Dictation</span></td>
+            <td><span class="chip">Guideline Q&amp;A on the note</span><span class="chip">Clinic's own protocols</span></td>
+            <td><span class="chip">ICD-10 / SNOMED codes</span><span class="chip">Referral letters</span><span class="chip">1-click EHR transfer</span></td>
+            <td><span class="chip ghost">Clinic OS: triage, scheduling (roadmap)</span></td></tr>
+          <tr style="--c:var(--khealth)"><th><span class="dot" style="background:var(--khealth)"></span> K Health</th>
+            <td><span class="chip">PatientGPT symptom chat</span><span class="chip">Structured intake</span><span class="chip">Books the visit</span></td>
+            <td><span class="chip">Virtual visit (own app)</span></td>
+            <td><span class="chip">Provider Co-Pilot: possible diagnoses, care gaps</span></td>
+            <td><span class="chip">Visit summary, Rx, referrals</span></td>
+            <td><span class="chip">Chronic care, refills, in-basket</span></td></tr>
+          <tr style="--c:var(--oe)"><th><span class="dot" style="background:var(--oe)"></span> OpenEvidence</th>
+            <td><span class="chip">Query uploaded patient documents</span></td>
+            <td><span class="chip">Visits: ambient transcription</span></td>
+            <td><span class="chip">Cited answers + EvidenceGrade</span><span class="chip">Patient-aware in Epic</span><span class="chip">OncoKB genomics</span></td>
+            <td><span class="chip">Evidence-backed A&amp;P</span><span class="chip">Patient take-homes</span></td>
+            <td><span class="chip">Dialer: calls, fax</span><span class="chip">CME credit</span></td></tr>
+          <tr style="--c:var(--epic)"><th><span class="dot" style="background:var(--epic)"></span> Epic AI</th>
+            <td><span class="chip">Art Insights chart summary</span></td>
+            <td><span class="chip">AI Charting (ambient)</span></td>
+            <td><span class="chip">Orders queued from conversation</span><span class="chip ghost">Ergo Visit surfaces chart data live</span></td>
+            <td><span class="chip">Draft note, Accept / Sign</span><span class="chip">Result messages to patients</span><span class="chip">Penny coding</span></td>
+            <td><span class="chip">Emmie in MyChart</span></td></tr>
+          <tr class="amby-row"><th>AMBY</th>
+            <td><span class="chip">Pulls labs, imaging, genomics, history</span></td>
+            <td><span class="chip">Handheld device, or any scribe as input</span></td>
+            <td><span class="chip">Ranked differential + next test, with reasoning</span></td>
+            <td><span class="chip">Orders and rationale into the EHR</span></td>
+            <td><span class="chip ghost">Outcomes: tests avoided, time to diagnosis</span></td></tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="legend"><span><span class="chip" style="--c:var(--ink-3);margin:0">Solid</span> live product</span><span><span class="chip ghost" style="margin:0">Dashed</span> announced, roadmap or partial</span></div>
+  </div>
+</section>
+
+<!-- ================= TANDEM ================= -->
+<section id="tandem" style="--c:var(--tandem)">
+  <div class="wrap">
+    <div class="co-head">
+      <div>
+        <div class="co-title"><span class="dot"></span><span class="eyebrow">Stockholm · founded 2023</span></div>
+        <h2>Tandem Health</h2>
+        <p class="muted" style="margin-top:10px">An "AI assistant for every step of care" for European clinicians. It listens to the visit, writes the note, suggests codes and pushes everything into the EHR. Since June 2026 it also answers clinical questions from guidelines and the clinic's own protocols, with all three modules certified as EU MDR Class IIa medical devices.</p>
+        <div class="facts">
+          <div class="fact"><b>$160M</b><span>raised · $100M Series B, Sept 2026</span></div>
+          <div class="fact"><b>10,000+</b><span>care organisations</span></div>
+          <div class="fact"><b>€125</b><span>per user / month (Pro); free tier</span></div>
+        </div>
+      </div>
+      <div class="card">
+        <div class="eyebrow" style="margin-bottom:12px">What they're working on</div>
+        <ul class="timeline">
+          <li><time>Sept 23, 2026</time>Aurora teleQ integration (Nordic call-back systems)</li>
+          <li><time>Sept 14, 2026</time>$100M Series B led by Scaleup Europe Fund (EQT) to build an "AI-native Clinic OS": triage, scheduling, patient messaging</li>
+          <li><time>Aug 24, 2026</time>Wins LUVN tender, Finland's largest rollout (7,000 staff)</li>
+          <li><time>Jul 10, 2026</time>Peer-reviewed JMIR study: −29% admin time (self-reported, n=177)</li>
+          <li><time>Jun 15, 2026</time>Clinical Decision Support goes live, Class IIa</li>
+          <li><time>Jan 26, 2026</time>Acquires Juvoly, the largest Dutch AI scribe</li>
+        </ul>
+      </div>
+    </div>
+
+    <h3 class="flow-title">The clinician flow <span class="small muted">Scroll sideways →</span></h3>
+    <div class="flow">
+      <div class="step">
+        <div class="shot"><img src="assets/tandem/01-recording.jpg" alt="Tandem recording screen showing a timer and a pulsing pause button" data-cap="Tandem recording a consultation (Swedish UI: 'Lyssnar…' = 'Listening…'). Template, microphone and 'finish and create' sit in the bottom bar."></div>
+        <div class="body"><span class="who">Clinician · desktop or phone</span><h4><span class="num">1</span>Start the consult and listen</h4><p>One button starts ambient recording. The bottom bar holds the note template, microphone choice (including Tandem's own mic) and "finish and create". Audio is never stored.</p></div>
+      </div>
+      <div class="step">
+        <div class="shot"><img src="assets/tandem/01b-mobile-recording.jpg" alt="Tandem running on a phone mounted on a medical cart" data-cap="The same recording view on a phone mounted at the bedside."></div>
+        <div class="body"><span class="who">Clinician · bedside</span><h4><span class="num">1b</span>Same flow on a phone</h4><p>Runs in the browser on a phone at the bedside. There is no dedicated device; hardware is limited to microphone accessories and a Philips SpeechMike integration.</p></div>
+      </div>
+      <div class="step">
+        <div class="shot"><video src="assets/tandem/scribe-demo.mp4" autoplay muted loop playsinline aria-label="Tandem scribe demo video"></video><span class="badge-src">Tandem product video</span></div>
+        <div class="body"><span class="who">Clinician</span><h4><span class="num">2</span>Structured note in seconds</h4><p>The note is generated into template sections (History, Examination, Social, Comment). Tabs switch between the raw <em>Transcription</em>, the <em>Note</em> and <em>+ Create document</em>.</p></div>
+      </div>
+      <div class="step">
+        <div class="shot"><img src="assets/tandem/02-note.jpg" alt="Tandem note for 'Sore throat' with History, Examination and Social sections" data-cap="Generated note for a 'Sore throat' consultation. 'Add or adjust' lets the clinician dictate changes; 'Save to record' pushes it into the EHR."></div>
+        <div class="body"><span class="who">Clinician</span><h4><span class="num">3</span>Review, then "Add or adjust" by voice</h4><p>The clinician reviews the draft and dictates corrections rather than typing. The note carries past history and medications <em>only as spoken in the room</em>, not pulled from the record.</p></div>
+      </div>
+      <div class="step">
+        <div class="shot"><img src="assets/tandem/03-memory.jpg" alt="Memory suggestion popup offering to save repeated edits" data-cap="'Memory suggestion': after repeated edits, Tandem offers to save them as standing preferences per note section."></div>
+        <div class="body"><span class="who">Clinician</span><h4><span class="num">4</span>It learns the clinician's style</h4><p>After the same edit is made several times, a "Memory suggestion" offers to keep it (e.g. "Write in bullet points" for Assessment &amp; Plan). It personalises without a settings page.</p></div>
+      </div>
+      <div class="step">
+        <div class="shot"><img src="assets/tandem/04b-code-suggestions.jpg" alt="Suggested ICD-10 and SNOMED codes" data-cap="Coding panel: confirmed codes at the top, 'Suggested' and 'Pinned' tabs, ranked by relevance."></div>
+        <div class="body"><span class="who">Clinician</span><h4><span class="num">5</span>Pick billing and clinical codes</h4><p>ICD-10 and SNOMED codes are suggested from the note and ranked "Most relevant / Others", with a search box for overrides. Country billing codes (e.g. Swiss TARDOC) via partners.</p></div>
+      </div>
+      <div class="step">
+        <div class="shot"><img src="assets/tandem/05-create-document.jpg" alt="Create document menu: fit note, specialty referral, advice request, patient letter" data-cap="'Create document' generates downstream paperwork from the same visit; the referral is flagged 'Recommended'."></div>
+        <div class="body"><span class="who">Clinician</span><h4><span class="num">6</span>Generate the follow-on paperwork</h4><p>Fit notes, specialty referrals, advice requests and patient letters come from the same visit. Tandem flags one as "Recommended", which is the closest it gets to suggesting a next step.</p></div>
+      </div>
+      <div class="step">
+        <div class="shot"><img src="assets/tandem/06-save-to-record.jpg" alt="Save to record button" data-cap="'Save to record' is the single commit action; the note then transfers to the EHR."></div>
+        <div class="body"><span class="who">Clinician</span><h4><span class="num">7</span>One click into the EHR</h4><p>"Save to record" transfers the note into one of 130+ EHR systems. This is the paid Pro feature and the core of Tandem's moat.</p></div>
+      </div>
+      <div class="step">
+        <div class="shot"><img src="assets/tandem/07-cds-ask.jpg" alt="Tandem home screen asking 'What would you like to do?' with a clinical question typed" data-cap="Clinical Decision Support: a chat box on the home screen ('Chronic daily headache, painkiller overuse. What should I review?') next to the EHR on a second monitor."></div>
+        <div class="body"><span class="who">Clinician</span><h4><span class="num">8</span>Ask a clinical question</h4><p>CDS is a chat box ("What would you like to do?") with suggested prompts. Answers are sourced from licensed guidelines and drug references, using the visit note as context.</p></div>
+      </div>
+      <div class="step">
+        <div class="shot"><img src="assets/tandem/08-add-guidelines.jpg" alt="Add guidelines dialog for uploading a PDF" data-cap="Clinics can upload their own protocols (PDF) so CDS answers follow local guidance."></div>
+        <div class="body"><span class="who">Clinic admin</span><h4><span class="num">9</span>Clinic uploads its own protocols</h4><p>Local guidelines (e.g. an antibiotic policy PDF) become part of the answer set, so the CDS answers "what does <em>our</em> clinic do?".</p></div>
+      </div>
+    </div>
+
+    <div class="two">
+      <div class="panel">
+        <h4>Design patterns worth noting</h4>
+        <ul>
+          <li><b>One persistent action bar</b> (template · adjust · save) follows the clinician through every screen.</li>
+          <li><b>Voice-first editing</b>: corrections are spoken, not typed.</li>
+          <li><b>Quiet personalisation</b>: "memory" learns from repeated edits.</li>
+          <li><b>Calm, neutral visual language</b> with a single lime accent for the primary action; it reads as a tool, not "AI".</li>
+        </ul>
+      </div>
+      <div class="panel amby">
+        <h4>What it means for AMBY</h4>
+        <ul>
+          <li>Tandem's CDS is <b>lookup on the note</b>. It never reads labs, imaging or history, and gives no differential and no test recommendation.</li>
+          <li>Its inputs are what was <em>said</em> in the room. AMBY's inputs are what the <em>tests show</em>.</li>
+          <li>Don't compete on the scribe. Tandem's notes could be one of AMBY's inputs, which makes Tandem a possible channel partner.</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ================= K HEALTH ================= -->
+<section id="khealth" style="--c:var(--khealth)">
+  <div class="wrap">
+    <div class="co-head">
+      <div>
+        <div class="co-title"><span class="dot"></span><span class="eyebrow">New York · founded 2016</span></div>
+        <h2>K Health</h2>
+        <p class="muted" style="margin-top:10px">K Health has moved from a consumer app to "AI-enabled clinical orchestration" for health systems. <b>PatientGPT</b> runs under the system's own brand, interviews the patient, captures structured intake and books the visit in the EMR. On the clinician side, <b>Provider Co-Pilot</b> summarises the chart and shows possible diagnoses and care gaps.</p>
+        <div class="facts">
+          <div class="fact"><b>~$380M</b><span>raised · ~$900M valuation (2024)</span></div>
+          <div class="fact"><b>50,000+</b><span>patients on HHC 24/7 in year one</span></div>
+          <div class="fact"><b>2028–29</b><span>IPO target</span></div>
+        </div>
+      </div>
+      <div class="card">
+        <div class="eyebrow" style="margin-bottom:12px">What they're working on</div>
+        <ul class="timeline">
+          <li><time>Sept 1, 2026</time>Reported to be eyeing an IPO by 2029</li>
+          <li><time>Aug 11, 2026</time>Atlantic Health embeds PatientGPT inside MyChart, answering from the patient's own record (3rd system)</li>
+          <li><time>Jul 15, 2026</time>Novant Health: 24/7 integrated primary care model</li>
+          <li><time>Jun 22, 2026</time>Hartford HealthCare expands into virtual <b>specialty</b> care (endocrinology first)</li>
+          <li><time>May 27, 2026</time>Penn Medicine: AI intake agents pre-fill the chart before the visit</li>
+        </ul>
+      </div>
+    </div>
+
+    <h3 class="flow-title">The patient → clinician flow <span class="small muted">Shown in HHC 24/7, Hartford HealthCare's app built on K Health · Scroll sideways →</span></h3>
+    <div class="flow">
+      <div class="step">
+        <div class="shot tall top"><img src="assets/khealth/hhc247-1.jpg" alt="HHC 24/7 home screen with 'Tell us the reason for your visit' input" data-cap="HHC 24/7 home (Hartford HealthCare, powered by K Health). Free-text 'reason for visit' starts the AI intake."></div>
+        <div class="body"><span class="who">Patient · health system's own brand</span><h4><span class="num">1</span>"Tell us the reason for your visit"</h4><p>The home screen leads with a free-text box, not a menu. Wait time for a care-team doctor is shown up front (4–14 min).</p></div>
+      </div>
+      <div class="step">
+        <div class="shot tall"><img src="assets/khealth/patientgpt-chat.gif" alt="Animated PatientGPT conversation about blood pressure" class="contain" style="object-fit:contain;background:#fff" data-cap="PatientGPT (animation from khealth.com): it references the patient's last three BP readings and asks follow-up questions."></div>
+        <div class="body"><span class="who">Patient</span><h4><span class="num">2</span>PatientGPT interviews the patient</h4><p>No decision tree: it asks the follow-ups an intake nurse would. In MyChart deployments it answers from the patient's own record ("your BP has been trending up over the last three readings").</p></div>
+      </div>
+      <div class="step">
+        <div class="shot tall" style="cursor:default;display:flex;align-items:center;padding:14px;background:var(--surface-2)">
+          <div class="chat" style="width:100%">
+            <div class="b pt">He's 4. It reached 102.5 last night.</div>
+            <div class="b ai">Thank you. Given his age and how long this has lasted, a same-day visit makes sense. Here is what is open near you:</div>
+            <div class="slots"><span class="slot">Virtual urgent care · Today 6:40pm</span><span class="slot">Pediatric primary care · Tomorrow 9:15am</span></div>
+            <div class="b pt">The 6:40 one, please.</div>
+            <div class="b ai">Booked for 6:40pm today. I have sent his intake summary ahead to the clinician.</div>
+          </div>
+        </div>
+        <div class="body"><span class="who">Patient</span><h4><span class="num">3</span>Routed and booked in the EMR</h4><p>Every conversation is designed to end in an appointment written back to the EMR, with the intake summary sent ahead. <span class="no-shot">Recreated from the example on khealth.com/product.</span></p></div>
+      </div>
+      <div class="step">
+        <div class="shot tall top"><img src="assets/khealth/hhc247-2.jpg" alt="HHC 24/7 visit thread with waiting room and video call" data-cap="Visit thread: Pre-visit / Visit tabs, assigned clinician card, then 'Join your video call'."></div>
+        <div class="body"><span class="who">Patient + clinician</span><h4><span class="num">4</span>Virtual visit with an assigned clinician</h4><p>The visit lives in one thread with <em>Pre-visit · Visit · Summary</em> tabs. The patient sees their assigned clinician and joins the video call from the chat.</p></div>
+      </div>
+      <div class="step textonly">
+        <div class="shot tall"><div class="inner"><b>Provider Co-Pilot</b>Inside the clinician's existing EHR: chart summary, <em>possible diagnoses</em>, suggested care plans, care gaps.<br><br><span class="no-shot">No public screenshot. K Health shows only the patient side publicly.</span></div></div>
+        <div class="body"><span class="who">Clinician · inside the EHR</span><h4><span class="num">5</span>Clinician sees a pre-built chart</h4><p>The intake arrives as a structured draft chart (HPI pre-filled). Co-Pilot proposes possible diagnoses and a care plan, built from what the patient <em>reported</em> plus EHR data.</p></div>
+      </div>
+      <div class="step">
+        <div class="shot tall top"><img src="assets/khealth/hhc247-5.jpg" alt="Visit summary with follow-up, prescriptions and referrals" data-cap="Summary tab: 'Continue your care', provider comments, prescriptions and referrals."></div>
+        <div class="body"><span class="who">Patient</span><h4><span class="num">6</span>Summary, prescriptions, referrals</h4><p>The visit closes with a follow-up booking button, prescriptions and referrals (e.g. orthopaedics). Between visits, PatientGPT handles refills, chronic care and in-basket triage.</p></div>
+      </div>
+    </div>
+
+    <div class="two">
+      <div class="panel">
+        <h4>Design patterns worth noting</h4>
+        <ul>
+          <li><b>White-label</b>: the patient sees Hartford, Novant or Atlantic, never K Health.</li>
+          <li><b>Conversation ends in an action</b>: every chat resolves to a time slot, not advice.</li>
+          <li><b>One thread per visit</b> with Pre-visit / Visit / Summary tabs.</li>
+          <li><b>Visible safety layer</b>: "The Judge" scores each conversation against the system's policy, with a pass/fail and the clause involved.</li>
+        </ul>
+      </div>
+      <div class="panel amby">
+        <h4>What it means for AMBY</h4>
+        <ul>
+          <li>K Health owns the <b>front door</b>. Its diagnosis suggestions rest on the patient's chat, so they stop where tests begin.</li>
+          <li>It is now heading into specialty care (endocrinology at Hartford), so the open window in specialties is narrowing.</li>
+          <li>Sell to the specialty departments of the same systems, and treat K Health's pre-visit chart as one more AMBY input.</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ================= OPENEVIDENCE ================= -->
+<section id="openevidence" style="--c:var(--oe)">
+  <div class="wrap">
+    <div class="co-head">
+      <div>
+        <div class="co-title"><span class="dot"></span><span class="eyebrow">Miami / Cambridge · free for verified US clinicians</span></div>
+        <h2>OpenEvidence</h2>
+        <p class="muted" style="margin-top:10px">Started as a search engine for the medical literature (licensed NEJM, JAMA, NCCN content) and is becoming a clinician workspace. It now has an ambient scribe (Visits), patient documents, an evidence-strength grade on every answer, patient handouts, a phone dialer and, inside Epic at several systems, <b>patient-aware</b> answers.</p>
+        <div class="facts">
+          <div class="fact"><b>$12B</b><span>valuation (Jan 2026)</span></div>
+          <div class="fact"><b>~65%</b><span>of US physicians use it</span></div>
+          <div class="fact"><b>Free</b><span>ad-supported for clinicians</span></div>
+        </div>
+      </div>
+      <div class="card">
+        <div class="eyebrow" style="margin-bottom:12px">What they're working on</div>
+        <ul class="timeline">
+          <li><time>Oct 1, 2026</time>AdventHealth deployment</li>
+          <li><time>Sept 16, 2026</time><b>MSK partnership: OncoKB precision-oncology (genomic) knowledge, paired with patient context inside Epic</b></li>
+          <li><time>Sept 3, 2026</time>Launches its own model family</li>
+          <li><time>Aug 19, 2026</time>Patient Take-Homes: answers rewritten for patients</li>
+          <li><time>Jul 10, 2026</time>EvidenceGrade: an A–D strength grade on every answer</li>
+          <li><time>Feb–May 2026</time>Inside Epic at Sutter, Mount Sinai and Cedars-Sinai ("patient-aware")</li>
+        </ul>
+      </div>
+    </div>
+
+    <h3 class="flow-title">The clinician flow <span class="small muted">Scroll sideways →</span></h3>
+    <div class="flow">
+      <div class="step">
+        <div class="shot tall top"><img src="assets/openevidence/app-0.jpg" alt="OpenEvidence app answering a lenalidomide question with an EvidenceGrade" data-cap="Mobile: a free-text question returns a synthesised answer with an EvidenceGrade badge (A−, Strong Evidence) and the source figure from NEJM."></div>
+        <div class="body"><span class="who">Clinician · phone or web</span><h4><span class="num">1</span>Ask in plain language</h4><p>One search box, no forms. The answer opens with a one-paragraph synthesis, then the grade, then the evidence.</p></div>
+      </div>
+      <div class="step">
+        <div class="shot tall top"><img src="assets/openevidence/app-4.jpg" alt="OpenEvidence answer showing journal figures inline" data-cap="Answers embed licensed figures and tables from NEJM, JAMA and others."></div>
+        <div class="body"><span class="who">Clinician</span><h4><span class="num">2</span>Read the cited evidence</h4><p>Every claim is cited, and licensed journal figures are shown inline. These content deals (NEJM, JAMA, Springer Nature, NCCN, Sage) are the moat.</p></div>
+      </div>
+      <div class="step">
+        <div class="shot wide contain"><img src="assets/openevidence/evidencegrade-ui.jpg" alt="EvidenceGrade popover with grade scale and adjustments" data-cap="EvidenceGrade popover: starting grade, upgrades/downgrades (convergence, indirectness) and final grade."></div>
+        <div class="body"><span class="who">Clinician</span><h4><span class="num">3</span>Check how strong the evidence is</h4><p>EvidenceGrade shows an A–D grade and <em>why</em>: the starting grade plus upgrades and downgrades. It makes the reasoning auditable, not just the citations.</p></div>
+      </div>
+      <div class="step">
+        <div class="shot wide contain"><img src="assets/openevidence/visits.jpg" alt="OpenEvidence Visits: note on the left with evidence callouts, question box on the right" data-cap="Visits: the Assessment &amp; Plan is annotated with guideline callouts (orange); suggested follow-ups on the right include 'Check for specific contraindications in my plan'."></div>
+        <div class="body"><span class="who">Clinician · in the room</span><h4><span class="num">4</span>Visits: transcribe and annotate the plan</h4><p>Ambient transcription writes the note, then annotates each plan item with guideline support. Suggested prompts include "Are there other questions I should ask?" and "Check for contraindications".</p></div>
+      </div>
+      <div class="step">
+        <div class="shot wide contain"><img src="assets/openevidence/visits-patient-docs.jpg" alt="Patient document list and a question about the patient's history" data-cap="Patient documents (nursing, critical care, radiology reports) can be uploaded and queried: 'What stands out in this patient's medical history?'"></div>
+        <div class="body"><span class="who">Clinician</span><h4><span class="num">5</span>Query the patient's own documents</h4><p>Upload reports (including radiology) and ask across them. This is the first step toward reasoning over the patient's record, though the documents are uploaded by hand rather than pulled from the EHR.</p></div>
+      </div>
+      <div class="step">
+        <div class="shot wide contain"><img src="assets/openevidence/patient-aware-cedars.jpg" alt="Patient-aware question with a Patient Context chip and a practice guideline answer" data-cap="Patient-aware mode at Cedars-Sinai: a 'Patient Context: Owen Evans' chip; the answer adapts to the patient's age and amoxicillin allergy."></div>
+        <div class="body"><span class="who">Clinician · inside Epic</span><h4><span class="num">6</span>Patient-aware answers inside Epic</h4><p>A "Patient Context" chip attaches the open chart, so the guideline answer adapts to age and allergies. With MSK's OncoKB, this now reaches <b>genomic alterations</b>.</p></div>
+      </div>
+      <div class="step">
+        <div class="shot wide contain"><img src="assets/openevidence/patient-take-home.jpg" alt="Create patient take-home dialog and the resulting mobile page" data-cap="Patient Take-Homes: choose reading level, add instructions, generate a shareable patient page."></div>
+        <div class="body"><span class="who">Clinician → patient</span><h4><span class="num">7</span>Hand it to the patient</h4><p>Any answer can be turned into a take-home page at a chosen reading level ("Why taking your statin matters"), shared by link.</p></div>
+      </div>
+      <div class="step">
+        <div class="shot wide contain"><img src="assets/openevidence/dialer.jpg" alt="OpenEvidence Dialer on phone" data-cap="OpenEvidence Dialer: calling, messaging, fax and voicemail for clinicians."></div>
+        <div class="body"><span class="who">Clinician</span><h4><span class="num">8</span>…and keeps adding workflow</h4><p>Dialer (calls, fax, voicemail), CME/MOC credits, coding help and games. The pattern: give clinicians reasons to open it every day.</p></div>
+      </div>
+    </div>
+
+    <div class="feature">
+      <figure><img src="assets/openevidence/evidencegrade-how.jpg" alt="Four-step EvidenceGrade method diagram" data-cap="OpenEvidence's published method for EvidenceGrade: gradeable? → score each paper → grade the body of evidence → final grade."><figcaption>OpenEvidence publishes its grading method. Showing its working is part of the brand.</figcaption></figure>
+      <div class="panel">
+        <h4>Design patterns worth noting</h4>
+        <ul>
+          <li><b>Single input, layered answer</b>: summary → grade → citations → figures.</li>
+          <li><b>Trust made visible</b>: EvidenceGrade, "Finished thinking" and source badges on every claim.</li>
+          <li><b>Context as a chip</b>: "Patient Context: Owen Evans" is a removable token, not a mode.</li>
+          <li><b>Serif + orange</b>: an editorial, journal-like visual language that signals "medical literature".</li>
+        </ul>
+      </div>
+    </div>
+    <div class="two">
+      <div class="panel amby" style="grid-column:1/-1">
+        <h4>What it means for AMBY</h4>
+        <ul>
+          <li><b>This is the one to watch.</b> In nine months it went from literature search to patient context inside Epic to genomic knowledge (OncoKB) at MSK. That is AMBY's direction.</li>
+          <li>The gap today: answers respond to a <em>question</em>; they don't proactively produce a ranked differential and the next test from labs + imaging + genomics + history. Uploaded documents are manual.</li>
+          <li>AMBY must match OpenEvidence's trust patterns (grades, citations, visible reasoning) from day one; clinicians will expect them.</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ================= EPIC ================= -->
+<section id="epic" style="--c:var(--epic)">
+  <div class="wrap">
+    <div class="co-head">
+      <div>
+        <div class="co-title"><span class="dot"></span><span class="eyebrow">Verona, WI · the EHR itself</span></div>
+        <h2>Epic AI</h2>
+        <p class="muted" style="margin-top:10px">Epic builds AI directly into the EHR under three personas: <b>Art</b> for clinicians, <b>Emmie</b> for patients and <b>Penny</b> for revenue cycle. Because it is native, it draws on the full longitudinal record. AI Charting (Feb 2026) listens to the visit, drafts the note <em>and queues orders</em>. Ergo Visit (Aug 2026) redesigns the whole office visit around it.</p>
+        <div style="display:flex;gap:10px;margin-top:16px;align-items:center;flex-wrap:wrap">
+          <img src="assets/epic/art-logo.png" alt="Art" style="height:52px;background:#fff;border-radius:10px;padding:4px">
+          <img src="assets/epic/emmie-logo.png" alt="Emmie" style="height:52px;background:#fff;border-radius:10px;padding:4px">
+          <img src="assets/epic/penny-logo.png" alt="Penny" style="height:52px;background:#fff;border-radius:10px;padding:4px">
+        </div>
+        <div class="facts">
+          <div class="fact"><b>16M / mo</b><span>Art Insights summaries</span></div>
+          <div class="fact"><b>200+</b><span>organisations use Penny coding</span></div>
+          <div class="fact"><b>−32%</b><span>result follow-up messages (Memorial Hermann)</span></div>
+        </div>
+      </div>
+      <div class="card">
+        <div class="eyebrow" style="margin-bottom:12px">What they're working on</div>
+        <ul class="timeline">
+          <li><time>Sept 8, 2026</time>Art drafts patient-friendly test-result messages in In Basket (Memorial Hermann)</li>
+          <li><time>Sept 2, 2026</time>"Ask Emmie" grounded in the full health history (Reid Health); OLVG −30% note time</li>
+          <li><time>Aug 18, 2026</time><b>Ergo Visit</b> pilots at Ochsner: AI-redesigned office visit</li>
+          <li><time>Aug 2026</time>Ambient AI for nurses (Mount Sinai); nurse notes 85% faster</li>
+          <li><time>Feb 4, 2026</time><b>AI Charting</b> launches: ambient note + suggested orders</li>
+        </ul>
+      </div>
+    </div>
+
+    <h3 class="flow-title">The Ergo Visit flow <span class="small muted">Screens from Epic's AI Charting launch image · Scroll sideways →</span></h3>
+    <div class="flow">
+      <div class="step textonly">
+        <div class="shot wide"><div class="inner"><b>Art Insights</b>"Summarise this patient": the clinically relevant points from across the chart, each linked to the source note.</div></div>
+        <div class="body"><span class="who">Clinician · before the room</span><h4><span class="num">1</span>Get up to speed from the chart</h4><p>Before walking in, the clinician asks Art for a summary. Every point links back to the note it came from. Used 16 million times a month. <span class="no-shot">No public screenshot.</span></p></div>
+      </div>
+      <div class="step">
+        <div class="crop" style="--x:.05;--y:.03;--w:.26;--h:.95;aspect-ratio:520/1069" data-full="assets/epic/ai-charting.jpg" data-cap="AI Charting on Epic's mobile app (Haiku): patient header, Art by Epic animation, one red stop button."><img src="assets/epic/ai-charting.jpg" alt="Epic mobile app recording with AI Charting"></div>
+        <div class="body"><span class="who">Clinician · phone in the room</span><h4><span class="num">2</span>AI Charting listens</h4><p>Started from Epic's own mobile app, already tied to the open patient. A single stop button. During Ergo Visit, it also pulls chart data onto the screen as topics come up.</p></div>
+      </div>
+      <div class="step">
+        <div class="crop" style="--x:.34;--y:.12;--w:.31;--h:.44;aspect-ratio:620/495" data-full="assets/epic/ai-charting.jpg" data-cap="'Heard in Visit Recording': orders discussed during the visit, already matched to orderables (dose change for bumetanide; smoking-cessation referral). 'Add to Cart & File' or 'Sign'."><img src="assets/epic/ai-charting.jpg" alt="Orders heard in visit recording panel"></div>
+        <div class="body"><span class="who">Clinician</span><h4><span class="num">3</span>Orders heard in the visit, ready to sign</h4><p>"Heard in Visit Recording" turns what was said into real orders (a Bumex dose change, a smoking-cessation referral) linked to the problem. The clinician taps <em>Sign</em>.</p></div>
+      </div>
+      <div class="step">
+        <div class="crop" style="--x:.65;--y:.03;--w:.31;--h:.93;aspect-ratio:620/1046" data-full="assets/epic/ai-charting.jpg" data-cap="Draft progress note (SOAP) with waveform icons marking AI-drafted sections; Accept or Cancel."><img src="assets/epic/ai-charting.jpg" alt="Draft SOAP note with Accept and Cancel"></div>
+        <div class="body"><span class="who">Clinician</span><h4><span class="num">4</span>Accept the drafted note</h4><p>A full SOAP note, with a waveform icon marking each AI-drafted section. Structure can be changed by voice ("make HPI a bulleted list"). <em>Accept</em> files it.</p></div>
+      </div>
+      <div class="step textonly">
+        <div class="shot wide"><div class="inner"><b>In Basket</b>Art drafts the result comment in plain language; clinician edits and sends.</div></div>
+        <div class="body"><span class="who">Clinician → patient</span><h4><span class="num">5</span>Explain results to the patient</h4><p>When labs and imaging come back, Art drafts a patient-friendly message. Memorial Hermann saw 32% fewer follow-up questions. <span class="no-shot">No public screenshot.</span></p></div>
+      </div>
+      <div class="step textonly">
+        <div class="shot wide"><div class="inner"><b>Emmie</b>In MyChart and by text: explains results and bills, schedules, recommends screenings, escalates to staff.</div></div>
+        <div class="body"><span class="who">Patient</span><h4><span class="num">6</span>Emmie answers the patient</h4><p>Patients "Ask Emmie" in MyChart, with answers grounded in their full history. This competes directly with K Health's PatientGPT, which Atlantic Health also put in MyChart.</p></div>
+      </div>
+    </div>
+
+    <div class="feature">
+      <figure data-full="assets/epic/ai-charting.jpg"><img src="assets/epic/ai-charting.jpg" alt="Epic AI Charting composite: mobile recording, orders panel and drafted note" data-cap="Epic AI Charting (Feb 2026 launch image): record on mobile → orders heard in the visit → drafted SOAP note."><figcaption>Epic AI Charting, full launch image (epic.com, Feb 2026)</figcaption></figure>
+      <div class="panel">
+        <h4>Design patterns worth noting</h4>
+        <ul>
+          <li><b>Zero context switching</b>: the AI starts inside the chart that is already open.</li>
+          <li><b>AI output becomes real orders</b>, matched to orderables and preference lists, not free text.</li>
+          <li><b>Provenance markers</b>: waveform icons show which text the AI drafted.</li>
+          <li><b>Human commit</b>: nothing files until Sign / Accept.</li>
+          <li>Dense, functional Epic UI with a purple-to-pink AI gradient.</li>
+        </ul>
+      </div>
+    </div>
+    <div class="two">
+      <div class="panel amby" style="grid-column:1/-1">
+        <h4>What it means for AMBY</h4>
+        <ul>
+          <li>Epic already does scribe + orders + full-record summary natively, for free with the EHR. Standalone scribes are being reassessed. <b>AMBY cannot be a substitute for Epic; it has to be additive.</b></li>
+          <li>Epic suggests orders <em>that were said aloud</em>. It does not reason about which test should be ordered or rank a differential across labs, imaging and genomics. That is AMBY's slot.</li>
+          <li>Deliver as a SMART-on-FHIR app inside Epic and copy Epic's patterns: orders as signable objects and a visible "AI drafted this" marker.</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ================= COMPARE ================= -->
+<section id="compare">
+  <div class="wrap">
+    <div class="sec-head"><div><div class="eyebrow">Side by side</div><h2 style="margin-top:6px">How the four flows compare</h2></div></div>
+    <div class="cmp">
+      <table>
+        <thead><tr><th></th><th>Tandem</th><th>K Health</th><th>OpenEvidence</th><th>Epic AI</th><th style="color:var(--amby)">AMBY (concept)</th></tr></thead>
+        <tbody>
+          <tr><th>Primary user</th><td>Clinician</td><td>Patient (then clinician)</td><td>Clinician</td><td>Clinician, patient, back office</td><td class="amby">Clinician (specialist)</td></tr>
+          <tr><th>Entry point</th><td>Record button</td><td>"Reason for visit" chat</td><td>Search box</td><td>Inside the open chart</td><td class="amby">Inside the open chart + handheld</td></tr>
+          <tr><th>What the AI reads</th><td>Conversation, note, uploaded protocols</td><td>Patient chat + EHR data</td><td>Literature; uploaded docs; chart context in Epic</td><td>Full longitudinal record + conversation</td><td class="amby">Labs, imaging, genomics, history + conversation</td></tr>
+          <tr><th>Main output</th><td>Note, codes, documents</td><td>Booked visit, intake chart</td><td>Cited answer with grade</td><td>Note + orders said aloud</td><td class="amby">Ranked differential + next test</td></tr>
+          <tr><th>Proactive or asked?</th><td>Asked (chat)</td><td>Proactive to patient</td><td>Asked (question)</td><td>Proactive (summary, orders)</td><td class="amby">Proactive at point of care</td></tr>
+          <tr><th>Trust signal</th><td>EU MDR Class IIa</td><td>"The Judge" audit, published studies</td><td>EvidenceGrade, citations</td><td>Native to the record, sign-off</td><td class="amby">FDA path + visible reasoning</td></tr>
+          <tr><th>Human approval step</th><td>Save to record</td><td>Clinician escalation</td><td>n/a (advice)</td><td>Sign / Accept</td><td class="amby">Clinician confirms orders</td></tr>
+          <tr><th>Price model</th><td>Freemium, €125/user/mo</td><td>Enterprise health-system deals</td><td>Free (ads), enterprise for EHR</td><td>Bundled with Epic</td><td class="amby">Outcome-based pilot</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</section>
+
+<!-- ================= PATTERNS ================= -->
+<section id="patterns">
+  <div class="wrap">
+    <div class="sec-head"><div><div class="eyebrow">For AMBY's own product</div><h2 style="margin-top:6px">Six UI patterns to borrow</h2><p class="muted">These patterns show up across all four products. Clinicians will expect most of them in AMBY on day one.</p></div></div>
+    <div class="patterns">
+      <div class="card pattern"><span class="num" style="--c:var(--epic)">1</span><h4>Outputs become signable orders</h4><p>Show suggested tests as real orders, matched to the system's order catalogue, one tap to sign. Not a paragraph of advice.</p><div class="from">Seen in: Epic AI Charting</div></div>
+      <div class="card pattern"><span class="num" style="--c:var(--oe)">2</span><h4>Grade every recommendation</h4><p>An evidence or confidence grade beside each item in the differential, with the "why" one click away.</p><div class="from">Seen in: OpenEvidence EvidenceGrade</div></div>
+      <div class="card pattern"><span class="num" style="--c:var(--oe)">3</span><h4>Patient context as a visible chip</h4><p>Make it obvious which patient and which data sources (labs, imaging, genomics) are in play, and let the clinician remove one.</p><div class="from">Seen in: OpenEvidence patient-aware</div></div>
+      <div class="card pattern"><span class="num" style="--c:var(--epic)">4</span><h4>Mark what the AI wrote</h4><p>A consistent marker on every AI-generated line, and nothing filed without an explicit human commit.</p><div class="from">Seen in: Epic waveform icons, Tandem "Save to record"</div></div>
+      <div class="card pattern"><span class="num" style="--c:var(--tandem)">5</span><h4>Learn from edits quietly</h4><p>When a clinician repeatedly overrides a suggestion, offer to remember it rather than making them configure settings.</p><div class="from">Seen in: Tandem "Memory suggestion"</div></div>
+      <div class="card pattern"><span class="num" style="--c:var(--khealth)">6</span><h4>End in an action</h4><p>Every AMBY session should close with a concrete next step (an order, a referral, a booked test), not just insight.</p><div class="from">Seen in: K Health PatientGPT</div></div>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap">
+    <h3>Sources</h3>
+    <ul>
+      <li><b>Tandem:</b> <a href="https://tandemhealth.ai/product">Product</a> · <a href="https://tandemhealth.ai/product/ai-scribe">AI Scribe</a> · <a href="https://tandemhealth.ai/product/clinical-decision-support">Clinical Decision Support</a> · <a href="https://tandemhealth.ai/resources/news">News</a></li>
+      <li><b>K Health:</b> <a href="https://www.khealth.com/product">PatientGPT</a> · <a href="https://www.khealth.com/press">Press &amp; research</a> · <a href="https://apps.apple.com/us/app/id6741442288">HHC 24/7 on the App Store</a> · <a href="https://www.businesswire.com/news/home/20250221026858/en">Hartford HealthCare + K Health partnership</a> · <a href="https://www.businesswire.com/news/home/20250512281600/en/K-Healths-AI-Physician-Mode-Now-Available-on-Mayo-Clinic-Platform">AI Physician Mode on Mayo Clinic Platform</a></li>
+      <li><b>OpenEvidence:</b> <a href="https://apps.apple.com/us/app/id6612007783">App Store listing</a> · <a href="https://www.openevidence.com/announcements/visits-real-time-medical-intelligence">Visits</a> · <a href="https://www.openevidence.com/announcements/openevidence-launches-evidencegrade-empowering-physicians-to-see-the-strength-of-cited-evidence-beneath-each-ai-answer">EvidenceGrade</a> · <a href="https://www.openevidence.com/announcements/openevidence-partners-with-cedars-sinai-to-create-patient-aware-clinical-intelligence-with-agentic-clinical-ai">Cedars-Sinai patient-aware</a> · <a href="https://www.openevidence.com/announcements/memorial-sloan-kettering-cancer-center-msk-and-openevidence-partner-to-advance-precision-oncology-at-the-point-of-care">MSK / OncoKB</a> · <a href="https://www.openevidence.com/announcements/openevidence-launches-patient-take-homes">Patient Take-Homes</a> · <a href="https://www.openevidence.com/announcements/messaging-faxing-and-voicemail-are-now-live-in-the-openevidence-dialer">Dialer</a></li>
+      <li><b>Epic:</b> <a href="https://www.epic.com/software/ai">Epic AI</a> · <a href="https://www.epic.com/epic/post/epic-ai-charting-rolls-out-alongside-an-expanding-set-of-built-in-ai-capabilities">AI Charting launch</a> · <a href="https://www.epic.com/epic/post/ochsner-health-first-to-use-epics-ergo-visit">Ergo Visit at Ochsner</a> · <a href="https://www.epic.com/epic/post/memorial-hermann-health-system-clinicians-use-epics-ai-tool-to-help-patients-better-understand-test-results">Art result messages</a> · <a href="https://www.epic.com/epic/post/reid-health-adopts-emmie-epics-ai-for-patients">Emmie at Reid Health</a></li>
+      <li>Funding, valuation and usage figures are from the AMBY competitive research notes (Sept 2026), which carry their own sources.</li>
+    </ul>
+    <p class="small">All product screenshots, videos and logos belong to their respective companies and are shown here for internal competitive analysis only.</p>
+  </div>
+</footer>
+
+<div id="lb" role="dialog" aria-modal="true" aria-label="Enlarged screenshot"><img alt=""><p></p></div>
+
+<script>
+(function(){
+  // theme toggle
+  var root=document.documentElement, btn=document.getElementById('themeBtn');
+  try{var saved=localStorage.getItem('theme'); if(saved) root.setAttribute('data-theme',saved);}catch(e){}
+  btn.addEventListener('click',function(){
+    var dark = root.getAttribute('data-theme') ? root.getAttribute('data-theme')==='dark' : matchMedia('(prefers-color-scheme: dark)').matches;
+    var next = dark ? 'light' : 'dark'; root.setAttribute('data-theme',next);
+    try{localStorage.setItem('theme',next);}catch(e){}
+  });
+
+  // lightbox
+  var lb=document.getElementById('lb'), lbImg=lb.querySelector('img'), lbCap=lb.querySelector('p');
+  function open(src,cap){lbImg.src=src; lbCap.textContent=cap||''; lb.classList.add('open');}
+  document.addEventListener('click',function(e){
+    var crop=e.target.closest('.crop,figure[data-full]');
+    if(crop){ var i=crop.querySelector('img'); open(crop.dataset.full, crop.dataset.cap || (i && i.dataset.cap)); return; }
+    var img=e.target.closest('.shot img, figure img');
+    if(img){ open(img.currentSrc||img.src, img.dataset.cap||img.alt); }
+  });
+  lb.addEventListener('click',function(){lb.classList.remove('open');});
+  document.addEventListener('keydown',function(e){if(e.key==='Escape') lb.classList.remove('open');});
+
+  // nav highlight
+  var links=[].slice.call(document.querySelectorAll('nav.top a'));
+  var io=new IntersectionObserver(function(entries){
+    entries.forEach(function(en){ if(en.isIntersecting){ links.forEach(function(l){ l.classList.toggle('on', l.getAttribute('href')==='#'+en.target.id); }); } });
+  },{rootMargin:'-40% 0px -55% 0px'});
+  document.querySelectorAll('section[id]').forEach(function(s){io.observe(s);});
+})();
+</script>
+</body>
+</html>
