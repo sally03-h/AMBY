@@ -27,6 +27,7 @@ assets/epic/        AI Charting launch image + Art/Emmie/Penny marks (epic.com)
 
 ## Notes
 
+- Each company section opens with **Watch the real product**: official demo videos (click to play) and real screens taken from them. YouTube videos play via youtube-nocookie embeds; OpenEvidence's walkthroughs stream from OpenEvidence's own server; most K Health videos are locked to khealth.com, so those cards link out.
 - HHC 24/7 is Hartford HealthCare's app, built on K Health's platform. K Health doesn't publish screens of its clinician-side Provider Co-Pilot, so that step is described in text.
-- Epic's only public product screenshot is the AI Charting launch image; the page crops it into the three flow steps it shows.
+- Epic publishes few real screen recordings; the best are its AI Charting launch image (cropped into three flow steps) and its Microsoft Ignite 2025 segment.
 - All screenshots, videos and logos belong to their respective companies and are used for internal competitive analysis.
